@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+
+    <header>
+
+        <button class="previewBtn">Preview</button>
+    </header>
+    <div class="formTitle">
+        
+            <h2>Untitle form</h2>
+            <hr>
+            <div class="title">
+                <input type="text" placeholder="form discription">
+            </div>
+
+              
+    </div>
+
+
+
+    <div class="questionBox">
+
+
+        <div class="questionItem">
+
+
+            <div class="card">
+                <div class="upper">
+
+                    <input type="text" placeholder="Type your question" >
+
+                    <select name="questionType" class = "questionType" >
+                        <option value="short">Ans Type</option>
+                        <option value="short">Short Answer</option>
+                        <option value="para">Long Answer</option>
+                        <option value="mcq">Radio</option>
+                        <option value="checkbox">Checkbox</option>
+                        <option value="Dropdown">Checkbox</option>
+
+                    </select>
+
+                </div>
+
+                <div class="lower">
+                    <div class="answerField"></div>
+                </div>
+
+                <div class="cardFooter">
+
+                    <i class="fa-regular fa-copy copyBtn"></i>
+
+                    <i class="fa-solid fa-trash deleteBtn"></i>
+
+                    <label class="requireBox">
+                        Required
+                        <input type="checkbox">
+                    </label>
+
+                </div>
+        
+            </div>
+
+            
+            <div class="toolBox">
+                <div class="plusIcon">
+                    <button class="addIcon">+</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+  
+    <div class="previewContainer"></div>
+
+    <script src ="app.js"></script>
+</body>
+</html>
