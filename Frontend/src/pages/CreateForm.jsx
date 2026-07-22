@@ -49,7 +49,7 @@ const handleSave = async () => {
                 formData
             );
 
-            alert("Form Updated Successfully ✅");
+            alert("Form Updated Successfully ");
 
         } else {
 
@@ -60,7 +60,7 @@ const handleSave = async () => {
 
             setFormId(response.data.data._id);
 
-            alert("Form Saved Successfully ✅");
+            alert("Form Saved Successfully ");
 
         }
 
@@ -75,7 +75,7 @@ const handleSave = async () => {
 
     console.log(error.response?.data);
 
-    alert("Unable to Save Form ❌");
+    alert("Unable to Save Form ");
 
     }
 
