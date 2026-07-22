@@ -1,0 +1,243 @@
+const Form = require("../models/Form");
+const Response = require("../models/Response");
+const createForm = async (req, res) => {
+
+ try{
+    const form = new Form(req.body);
+
+    await form.save();
+
+    res.status(201).json({
+        message: "Form saved successfully",
+        data: form
+    });
+
+    }
+
+    catch(error){
+       res.status(500).json({
+        message: "Failed to save form",
+        error: error.message
+    });
+    }
+
+
+};
+
+const getForms = async(req,res)=>{
+
+   const forms = await Form.find();
+   try{ res.status(200).json({
+    success: true,
+    count: forms.length,
+    forms
+    });
+
+   }
+
+     catch(error){
+       res.status(500).json({
+        message: "something went wrong!",
+        error: error.message
+    });
+    }
+   
+};
+
+const getFormById = async (req , res )=>{
+
+    try{
+        const { id } = req.params;
+
+        const form = await Form.findById(id);
+        
+        if(!form){
+           return res.status(404).json({
+               success:false,
+               message:"Form not found"
+
+            })
+         
+        }
+
+        res.json({
+            success:true,
+            form
+
+        });
+
+    }
+
+    catch(error){
+        res.status(500).json({
+        message: "something went wrong!",
+        error: error.message
+       });
+    };
+
+};
+
+const updateForm = async (req , res)=>{
+
+    try{
+        const {id} = req.params;
+        
+        const updatedForm = await Form.findByIdAndUpdate( id , req.body , {new:true,runValidators:true});
+
+        if(!updatedForm){
+           return res.status(404).json({
+                success:false,
+                message:"Form not found !"
+            });
+        }
+
+        res.status(200).json({
+            updatedForm
+        })
+
+    }
+
+    catch(error){
+        res.status(500).json({
+            success:false,
+            message:"unable to update!",
+            error:error.message
+        })
+    }
+
+}
+
+const deleteForm = async (req , res) =>{
+
+    try{
+        const {id} = req.params;
+       const form= await Form.findByIdAndDelete(id);
+
+        if(!form){
+            return res.status(404).json({
+                success:false,
+                message:"Form not found !"
+            })
+        }
+
+        res.status(200).json({
+            success:true,
+            message:"Form deleted successfully "
+        })
+
+    }
+
+    catch(err){
+        res.status(500).json({
+            success:false,
+            message:"Unable to delete this form !",
+            error:err.message
+        })
+    }
+}
+
+
+const Response = require("../models/Response");
+
+const submitResponse = async (req, res) => {
+
+    try{
+
+        // Step 1
+        const {id} = req.params;
+
+        // Step 2
+        const answers = req.body.answers;
+
+        // Step 3
+
+        const form = await Form.findById(id);
+
+        if(!form){
+
+             return res.status(404).json({
+                success: false,
+                message: "Form not found"
+            });
+        }
+
+        const response = new Response({formId:id , answers});
+
+             if (!answers || answers.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Answers are required"
+                });
+            }
+
+        // Step 4
+       await response.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Response submitted successfully",
+            response
+        });
+
+        // Step 5
+
+        res.status(201).json({
+            success:true,
+            message:"response has been collected"
+        })
+
+    }
+
+    catch(error){
+        res.status(500).json({
+            success:false,
+            message:"Something went wrong!",
+            error:error.message
+        })
+    }
+
+}
+
+
+const  getResponses = async (req,res)=>{
+try{
+
+     const {id} = req.params;
+
+    const form = await Form.findById(id);
+
+    if(!form){
+        return res.status(404).json({
+            success:false,
+            message:"form not found"
+
+        })
+    }
+
+    const responses =  await Response.find({formId:id});
+
+    res.status(200).json({
+        success:true,
+        count:responses.length,
+        responses
+
+    })
+
+
+}
+
+catch(error){
+    res.status(500).json({
+        success:false,
+        message:"failed to connect",
+        error:error.message
+    })
+}
+   
+}
+
+
+
+module.exports = {
+    createForm , getForms , getFormById ,updatedForm , deleteForm ,getResponses
+};

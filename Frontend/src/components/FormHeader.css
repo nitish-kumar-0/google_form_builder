@@ -1,0 +1,37 @@
+.formTitle{
+
+    width:800px;
+    margin:10px auto;
+    padding:25px;
+    min-height:150px;
+    background:white;
+
+    border-radius:8px;
+
+    border-left:6px solid #673ab7;
+
+    border-top:8px solid #673ab7;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+}
+
+.title{
+
+    margin-top:15px;
+
+}
+
+.formTitle input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    font-size:20px;
+
+    border-bottom:1px solid gray;
+
+}
