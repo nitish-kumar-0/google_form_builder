@@ -31,7 +31,7 @@ const auth = (req, res, next) => {
         req.user = decoded;
 
         next();
-        console.log("✅ Auth Middleware Hit");
+       
     }
     
 

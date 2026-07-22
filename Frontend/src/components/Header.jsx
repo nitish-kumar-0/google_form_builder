@@ -24,7 +24,19 @@ function Header({
         navigate(`/preview/${formId}`);
 
     };
-    
+
+    const handleLogout = () => {
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("user");
+
+    alert("Logged Out Successfully 👋");
+
+    navigate("/login");
+
+};
+
     return (
 
         <header className="header">
@@ -41,6 +53,9 @@ function Header({
                 onClick={handlePreview}
             >
                 Preview
+            </button>
+            <button onClick={handleLogout}>
+                Logout
             </button>
 
         </header>

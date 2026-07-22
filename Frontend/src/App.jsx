@@ -2,7 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
@@ -22,7 +22,7 @@ function App() {
 
       <Route path="/" element={<Home />} />
 
-      <Route path="/create" element={<CreateForm />} />
+      
 
       <Route path="/preview" element={<PreviewForm />} />
 
@@ -34,13 +34,61 @@ function App() {
 
       <Route path="/responses/:id" element={<Responses />} />
 
-      <Route path="/dashboard" element={<Dashboard />} />
+      
 
-      <Route path="/edit/:id" element={<CreateForm />} />
+     
 
       <Route path="/register" element={<Register />} />
 
       <Route path="/login" element={<Login />} />
+
+    <Route
+
+        path="/dashboard"
+
+        element={
+
+            <ProtectedRoute>
+
+                <Dashboard />
+
+            </ProtectedRoute>
+
+        }
+
+    />
+
+    <Route
+
+        path="/create"
+
+        element={
+
+            <ProtectedRoute>
+
+                <CreateForm />
+
+            </ProtectedRoute>
+
+        }
+
+    />
+
+    <Route
+
+        path="/edit/:id"
+
+        element={
+
+            <ProtectedRoute>
+
+                <CreateForm />
+
+            </ProtectedRoute>
+
+        }
+
+    />
 
     </Routes>
     </>
