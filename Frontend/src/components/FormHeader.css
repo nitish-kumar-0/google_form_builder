@@ -1,37 +1,61 @@
 .formTitle{
 
     width:800px;
-    margin:10px auto;
-    padding:25px;
-    min-height:150px;
+
+    margin:20px auto;
+
     background:white;
 
-    border-radius:8px;
+    padding:30px;
 
-    border-left:6px solid #673ab7;
+    border-radius:10px;
 
-    border-top:8px solid #673ab7;
-
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
 
 }
 
-.title{
-
-    margin-top:15px;
-
-}
-
-.formTitle input{
+.form-title-input{
 
     width:100%;
+
+    font-size:32px;
 
     border:none;
 
     outline:none;
 
-    font-size:20px;
+    border-bottom:2px solid #ddd;
 
-    border-bottom:1px solid gray;
+    padding:10px 0;
+
+    margin-bottom:20px;
+
+}
+
+.form-title-input:focus{
+
+    border-bottom:2px solid #673ab7;
+
+}
+
+.form-description-input{
+
+    width:100%;
+
+    font-size:16px;
+
+    border:none;
+
+    outline:none;
+
+    border-bottom:1px solid #ddd;
+
+    padding:10px 0;
+
+}
+
+.form-description-input:focus{
+
+    border-bottom:2px solid #673ab7;
 
 }

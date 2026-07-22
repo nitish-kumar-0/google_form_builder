@@ -20,7 +20,7 @@ function App() {
 
       <Route path="/create" element={<CreateForm />} />
 
-      <Route path="/preview/:id" element={<PreviewForm />} />
+      <Route path="/preview" element={<PreviewForm />} />
 
       <Route path="/form/:id" element={<FillForm />} />
 

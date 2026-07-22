@@ -1,30 +1,31 @@
 import "./FormHeader.css";
 
-function FormHeader() {
+function FormHeader({
+    title,
+    setTitle,
+    description,
+    setDescription
+}) {
 
     return (
 
         <div className="formTitle">
 
-            <h2>
+            <input
+                className="form-title-input"
+                type="text"
+                placeholder="Untitled Form"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
 
-                <input
-                    type="text"
-                    placeholder="Untitled Form"
-                />
-
-            </h2>
-
-            <hr />
-
-            <div className="title">
-
-                <input
-                    type="text"
-                    placeholder="Form Description"
-                />
-
-            </div>
+            <input
+                className="form-description-input"
+                type="text"
+                placeholder="Form Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+            />
 
         </div>
 

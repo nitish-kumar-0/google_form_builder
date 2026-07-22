@@ -40,15 +40,11 @@ function changeQType(select,answerField){
 
         answerField.innerHTML=`
 
-        <textarea  placeholder ="Type your long answer"
-          rows="7"
-           cols="86.5"  > </textarea>
-        
-        
-        
-        
+        <textarea class="longAnswer" placeholder="Type your long answer" rows="7" maxlength="1000"></textarea>
 
-        `;
+        <div class="charCount">0 / 1000</div>
+         `;
+        
     }
 
     else if(select.value === 'mcq'){
@@ -130,7 +126,6 @@ function changeQType(select,answerField){
 
 
 
-
 container.addEventListener("click" ,function(event){
     
     
@@ -193,7 +188,8 @@ container.addEventListener("click" ,function(event){
         `;
 
         container.insertAdjacentHTML("beforeend", newCard);
-
+         const newQuestion = event.target.closest(".questionItem");
+         
          const radios = newQuestion.querySelectorAll("input[type='radio']");
          const randomNum = crypto.randomUUID();
          radios.forEach(radio=>{
@@ -203,7 +199,6 @@ container.addEventListener("click" ,function(event){
     }
 
 })
-
 
 
 
@@ -313,6 +308,10 @@ if(event.target.classList.contains("deleteOptionBtn")){
 
 
 const previewBtn = document.querySelector(".previewBtn");
+
+const backBtn = document.querySelector(".backBtn");
+
+const builderContainer = document.querySelector(".builderContainer");
 const previewContainer = document.querySelector(".previewContainer");
 
 previewBtn.addEventListener("click", () => {
@@ -326,12 +325,19 @@ previewBtn.addEventListener("click", () => {
         const questionText = question.querySelector(".upper input").value;
 
         const type = question.querySelector(".questionType").value;
+        const required = question.querySelector(".requireBox input").checked;
+
+
+
+       
+
+        
 
         if (type === "short") {
 
             previewContainer.innerHTML += `
 
-                <div class="preview-question">
+                <div class="preview-question" data-required = "${required}">
 
                     <h3>${questionText}</h3>
 
@@ -350,15 +356,13 @@ previewBtn.addEventListener("click", () => {
 
             previewContainer.innerHTML += `
 
-                <div class="preview-question">
+                <div class="preview-question"  data-required="${required}">
 
                     <h3>${questionText}</h3>
 
-                      <textarea  placeholder ="Type your long answer" rows="7" cols="86.5"  >
+                        <textarea class="longAnswer" placeholder="Type your long answer" rows="5" maxlength="1000"></textarea>
 
-
-                     </textarea>
-
+                    <div class="charCount">0 / 1000</div>
                 </div>
 
             `;
@@ -372,19 +376,22 @@ previewBtn.addEventListener("click", () => {
 
             let optionHTML = "";
 
-             options.forEach(option => {
+            options.forEach((option, index) => {
 
-              optionHTML += `
+            optionHTML += `
                 <div>
-                    <input type="radio" name="${questionText}">
+                    <input type="radio" name="question">
                     <label>${option.value}</label>
                 </div>
             `;
 
-            });
+                });
 
-        previewContainer.innerHTML += `
-            <div class="preview-question">
+
+            
+
+           previewContainer.innerHTML += `
+            <div class="preview-question" data-required ="${required}">
 
                 <h3>${questionText}</h3>
 
@@ -393,6 +400,7 @@ previewBtn.addEventListener("click", () => {
             </div>
         `;
 
+ 
         }
 
         else if (type === "checkbox") {
@@ -413,7 +421,7 @@ previewBtn.addEventListener("click", () => {
             });
 
         previewContainer.innerHTML += `
-            <div class="preview-question">
+            <div class="preview-question" data-required ="${required}">
 
                 <h3>${questionText}</h3>
 
@@ -440,7 +448,7 @@ previewBtn.addEventListener("click", () => {
         });
 
         previewContainer.innerHTML += `
-            <div class="preview-question">
+            <div class="preview-question" data-required ="${required}">
 
                 <h3>${questionText}</h3>
 
@@ -457,8 +465,180 @@ previewBtn.addEventListener("click", () => {
 
 
         }
-        
+
     });
+
+        builderContainer.style.display = "none";
+
+        previewContainer.style.display = "block";
+
+        backBtn.style.display = "inline-block";
+
+
+        previewContainer.innerHTML += `
+        <button class="submitBtn">Submit</button>
+           `;
+
+    
+
+           
+
+       
+});
+
+previewContainer.addEventListener("input", (event) => {
+
+    if (event.target.classList.contains("longAnswer")) {
+
+        const textarea = event.target;
+        const count = textarea.nextElementSibling;
+
+        count.textContent = `${textarea.value.length} / 1000`;
+
+    }
 
 });
 
+
+previewContainer.addEventListener("click", (event) => {
+
+    if(event.target.classList.contains("submitBtn")){
+
+       const previewQuestions = previewContainer.querySelectorAll(".preview-question");
+
+       let isValid = true;
+
+       previewQuestions.forEach(question => {
+
+        const questionText = question.querySelector("h3").textContent;
+
+        const textInput = question.querySelector("input[type='text']");
+
+        const textarea = question.querySelector("textarea");
+
+        const radioBtn = question.querySelector("input[type='radio']:checked");
+        const radios = question.querySelectorAll("input[type='radio']");
+
+        const checkedBoxes = question.querySelectorAll("input[type='checkbox']:checked");
+        const checkboxes = question.querySelectorAll("input[type='checkbox']");
+
+        const select = question.querySelector("select");
+
+        const required = question.dataset.required === "true";
+
+
+
+
+            if (textInput) {
+            // Short answer validation
+                        
+                if (required && textInput.value.trim() === "") {
+
+                alert(`${questionText} is required`);
+
+                isValid = false;
+                    return;
+                }
+
+                 console.log(questionText, textInput.value);
+
+
+            }
+
+            else if (textarea) {
+                // Paragraph validation
+                if (required  && textarea.value.trim() === "") {
+
+                alert(`${questionText} is required`);
+
+                isValid = false;
+                return;
+
+             }
+
+              console.log(questionText, textarea.value);
+
+            }
+
+            else if (radios.length > 0) {
+            // MCQ validation
+
+                if (required && !radioBtn) {
+
+                alert(`${questionText} is required`);
+
+                isValid = false;
+                return;
+
+                }
+
+                 console.log(questionText, radioBtn.nextElementSibling.textContent);
+            }
+
+            else if (checkboxes.length > 0) {
+            // Checkbox validation
+                
+                if (required && checkedBoxes.length === 0) {
+
+                        alert(`${questionText} is required`);
+
+                        isValid = false;
+                        return;
+
+                    }
+
+                     let answer = [];
+                        checkedBoxes.forEach(box => {
+
+                        answer.push(box.nextElementSibling.textContent)
+                        
+                        });
+
+                        console.log(questionText, answer);
+            }
+
+            else if (select) {
+            // Dropdown validation
+
+                if (
+                    required &&
+                    select.selectedIndex === 0
+                ) {
+
+                    alert(`${questionText} is required`);
+
+                    isValid = false;
+                    return;
+
+                }
+                const answer = select.options[select.selectedIndex].text;
+
+                console.log(questionText, answer);
+
+         }
+
+
+
+     
+
+    });
+
+      if(!isValid){
+        return;
+       }
+
+       }
+
+     
+
+});
+
+backBtn.addEventListener("click", () => {
+
+    previewContainer.style.display = "none";
+
+    builderContainer.style.display = "block";
+
+    backBtn.style.display = "none";
+
+});

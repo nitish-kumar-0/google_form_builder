@@ -1,22 +1,49 @@
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
-function Header() {
-  return (
-    <header className="header">
+function Header({
+    title,
+    description,
+    questions,
+    onSave
+}) {
 
-      <button className="previewBtn">
-        Preview
-      </button>
+    const navigate = useNavigate();
 
-      <button
-        className="backBtn"
-        style={{ display: "none" }}
-      >
-        Back
-      </button>
+    const handlePreview = () => {
 
-    </header>
-  );
+        navigate("/preview", {
+            state: {
+                title,
+                description,
+                questions
+            }
+        });
+
+    };
+
+    return (
+
+        <header className="header">
+
+            <button
+                className="saveBtn"
+                onClick={onSave}
+            >
+                Save
+            </button>
+
+            <button
+                className="previewBtn"
+                onClick={handlePreview}
+            >
+                Preview
+            </button>
+
+        </header>
+
+    );
+
 }
 
 export default Header;

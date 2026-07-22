@@ -50,14 +50,28 @@ input[type ="text"]{
 }
 
 .question-card{
-    position:relative;
+
     width:800px;
+
     margin:15px auto;
-    background:white;
-    border-radius:8px;
+
     padding:25px;
-    box-shadow:0 4px 10px rgba(0,0,0,.15);
-      
+
+    background:white;
+
+    border-radius:8px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+
+    position:relative;
+
+    transition:.2s;
+
+}
+
+.question-card:hover{
+
+    box-shadow:0 4px 14px rgba(0,0,0,.2);
 
 }
 
@@ -73,11 +87,56 @@ input[type ="text"]{
 
     flex:1;
 
+    font-size:22px;
+
+    border:none;
+
+    border-bottom:1px solid #ccc;
+
+    outline:none;
+
+    padding:10px 0;
+
+}
+
+.question-input:focus{
+
+    border-bottom:2px solid #673ab7;
+
 }
 
 .question-type{
 
-    width:180px;
+    width:200px;
+
+    height:45px;
+
+    padding:0 10px;
+
+    border:1px solid #dadce0;
+
+    border-radius:6px;
+
+    outline:none;
+
+    background:white;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+}
+
+.question-type:hover{
+
+    border-color:#673ab7;
+
+}
+
+.question-type:focus{
+
+    border:2px solid #673ab7;
+
 }
 
 .question-body{
@@ -204,17 +263,10 @@ input[type ="text"]{
 
 .toolBox{
 
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: 0.3s;
-}
-
-.question-card:hover .toolBox{
-
     opacity: 1;
 
     pointer-events: auto;
 
+    transition: 0.3s;
 }
+

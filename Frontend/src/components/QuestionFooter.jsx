@@ -1,5 +1,9 @@
 import "./QuestionFooter.css";
-import { MdContentCopy, MdDeleteOutline } from "react-icons/md";
+import { MdContentCopy, MdDeleteOutline,MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+
+
+
+
 
 function QuestionFooter({
   question,
@@ -52,9 +56,41 @@ const handleRequiredToggle = () => {
 
 };
 
+
+const handleMoveUp = () => {
+
+    if (index === 0) return;
+
+    const updatedQuestions = [...questions];
+
+    [updatedQuestions[index], updatedQuestions[index - 1]] = [
+        updatedQuestions[index - 1],
+        updatedQuestions[index]
+    ];
+
+    setQuestions(updatedQuestions);
+
+};
+
+const handleMoveDown = () => {
+
+    if (index === questions.length - 1) return;
+
+    const updatedQuestions = [...questions];
+
+    [updatedQuestions[index], updatedQuestions[index + 1]] = [
+        updatedQuestions[index + 1],
+        updatedQuestions[index]
+    ];
+
+    setQuestions(updatedQuestions);
+
+};
+
+
   return (
 
-    <div className="question-footer">
+        <div className="question-footer">
 
         <MdContentCopy
             className="footer-icon"
@@ -64,6 +100,16 @@ const handleRequiredToggle = () => {
         <MdDeleteOutline
             className="footer-icon"
             onClick={handleDeleteQuestion}
+        />
+
+        <MdKeyboardArrowUp
+            className="footer-icon"
+            onClick={handleMoveUp}
+        />
+
+        <MdKeyboardArrowDown
+            className="footer-icon"
+            onClick={handleMoveDown}
         />
 
         <label className="required-toggle">

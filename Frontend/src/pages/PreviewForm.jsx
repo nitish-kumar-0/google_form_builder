@@ -1,27 +1,113 @@
 import { useLocation } from "react-router-dom";
+import "./PreviewForm.css";
 
 function PreviewForm() {
 
     const { state } = useLocation();
 
-    const form = state;
+    if (!state) {
+        return (
+            <h2 style={{ textAlign: "center", marginTop: "50px" }}>
+                No Form Found
+            </h2>
+        );
+    }
+
+    const { title, description, questions } = state;
 
     return (
 
-        <div>
+        <div className="preview-container">
 
-            <h1>{form.title}</h1>
+            <div className="preview-header">
 
-            <p>{form.description}</p>
+                <h1>{title || "Untitled Form"}</h1>
 
-            <hr />
+                <p>{description || "No Description"}</p>
+
+            </div>
 
             {
-                form.questions.map((question) => (
+                questions.map((question, index) => (
 
-                    <div key={question.id}>
+                    <div
+                        className="preview-question"
+                        key={question.id}
+                    >
 
-                        <h3>{question.questionText}</h3>
+                        <h3>
+                            {index + 1}. {question.questionText || "Untitled Question"}
+                        </h3>
+
+                        {
+                            question.type === "short" && (
+                                <input
+                                    type="text"
+                                    placeholder="Your Answer"
+                                />
+                            )
+                        }
+
+                        {
+                            question.type === "para" && (
+                                <textarea
+                                    placeholder="Your Answer"
+                                />
+                            )
+                        }
+
+                        {
+                            question.type === "mcq" &&
+                            question.options.map((option, i) => (
+
+                                <label key={i}>
+
+                                    <input
+                                        type="radio"
+                                        name={question.id}
+                                    />
+
+                                    {option}
+
+                                </label>
+
+                            ))
+                        }
+
+                        {
+                            question.type === "checkbox" &&
+                            question.options.map((option, i) => (
+
+                                <label key={i}>
+
+                                    <input type="checkbox" />
+
+                                    {option}
+
+                                </label>
+
+                            ))
+                        }
+
+                        {
+                            question.type === "dropdown" && (
+
+                                <select>
+
+                                    {
+                                        question.options.map((option, i) => (
+
+                                            <option key={i}>
+                                                {option}
+                                            </option>
+
+                                        ))
+                                    }
+
+                                </select>
+
+                            )
+                        }
 
                     </div>
 
