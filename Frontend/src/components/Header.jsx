@@ -5,23 +5,26 @@ function Header({
     title,
     description,
     questions,
-    onSave
+    onSave,
+    formId
 }) {
 
     const navigate = useNavigate();
 
     const handlePreview = () => {
 
-        navigate("/preview", {
-            state: {
-                title,
-                description,
-                questions
-            }
-        });
+        if (!formId) {
+
+            alert("Please save the form first.");
+
+            return;
+
+        }
+
+        navigate(`/preview/${formId}`);
 
     };
-
+    
     return (
 
         <header className="header">

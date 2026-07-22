@@ -24,15 +24,20 @@ const submitResponse = async (req, res) => {
                 message: "Form not found"
             });
         }
+        
+        if (!answers || answers.length === 0) {
 
-        const response = new Response({formId:id , answers});
+            return res.status(400).json({
+                success: false,
+                message: "Answers are required"
+            });
 
-             if (!answers || answers.length === 0) {
-                return res.status(400).json({
-                    success: false,
-                    message: "Answers are required"
-                });
-            }
+        }
+
+        const response = new Response({
+            formId: id,
+            answers
+        });
 
         // Step 4
        await response.save();
@@ -45,10 +50,6 @@ const submitResponse = async (req, res) => {
 
         // Step 5
 
-        res.status(201).json({
-            success:true,
-            message:"response has been collected"
-        })
 
     }
 

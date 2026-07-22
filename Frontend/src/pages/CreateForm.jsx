@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+
 import Header from "../components/Header";
 import FormHeader from "../components/FormHeader";
 import QuestionCard from "../components/QuestionCard";
@@ -11,6 +14,8 @@ function CreateForm() {
     const [title, setTitle] = useState("");
 
     const [description, setDescription] = useState("");
+
+    const [formId, setFormId] = useState(null);
 
     // Questions State
     const [questions, setQuestions] = useState([
@@ -23,7 +28,9 @@ function CreateForm() {
         }
     ]);
 
-    const handleSave = async () => {
+    const { id } = useParams();
+
+const handleSave = async () => {
 
     try {
 
@@ -33,24 +40,84 @@ function CreateForm() {
             questions
         };
 
-        const response = await axios.post(
-            "http://localhost:5000/api/forms",
-            formData
-        );
+        let response;
 
-        alert("Form Saved Successfully ✅");
+        if (id) {
 
-        console.log(response.data);
+            response = await axios.put(
+                `http://localhost:5000/api/forms/${id}`,
+                formData
+            );
 
-    } catch (error) {
+            alert("Form Updated Successfully ✅");
 
-        console.error(error);
+        } else {
 
-        alert("Unable to Save Form ❌");
+            response = await axios.post(
+                "http://localhost:5000/api/forms",
+                formData
+            );
+
+            setFormId(response.data.data._id);
+
+            alert("Form Saved Successfully ✅");
+
+        }
+
+     
+    }
+
+    catch (error) {
+
+    console.log(error);
+
+    console.log(error.response);
+
+    console.log(error.response?.data);
+
+    alert("Unable to Save Form ❌");
 
     }
 
 };
+
+
+    const fetchForm = async () => {
+
+    try {
+
+        const res = await axios.get(
+            `http://localhost:5000/api/forms/${id}`
+        );
+        setFormId(form._id);
+        const form = res.data.form;
+
+        setTitle(form.title);
+
+        setDescription(form.description);
+
+        setQuestions(form.questions);
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+};
+
+useEffect(() => {
+
+        if (id) {
+
+            fetchForm();
+
+        }
+
+    }, [id]);
+
 
     return (
 
@@ -61,6 +128,7 @@ function CreateForm() {
                 description={description}
                 questions={questions}
                 onSave={handleSave}
+                formId={formId}
             />
             
 

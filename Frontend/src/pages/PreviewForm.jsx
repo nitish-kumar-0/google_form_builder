@@ -1,19 +1,103 @@
-import { useLocation } from "react-router-dom";
+// import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+
+import axios from "axios";
 import "./PreviewForm.css";
+
 
 function PreviewForm() {
 
-    const { state } = useLocation();
+    const { id } = useParams();
 
-    if (!state) {
-        return (
-            <h2 style={{ textAlign: "center", marginTop: "50px" }}>
-                No Form Found
-            </h2>
+    const [form, setForm] = useState(null);
+
+    
+const [responses, setResponses] = useState({});
+
+
+    
+
+    const fetchForm = async () => {
+
+        try {
+
+            const res = await axios.get(
+                `http://localhost:5000/api/forms/${id}`
+            );
+
+            setForm(res.data.form);
+
+            console.log(res.data);
+
+        setForm(res.data.form);
+
+        }
+
+        catch (error) {
+
+            console.log(error);
+
+        }
+
+};
+
+useEffect(() => {
+
+    fetchForm();
+
+}, []);
+
+if (!form) {
+
+    return <h2>Loading...</h2>;
+
+}
+
+
+const handleResponseChange = (questionId, value) => {
+
+    setResponses((prev) => ({
+        ...prev,
+        [questionId]: value
+    }));
+
+};
+    
+const handleSubmit = async () => {
+
+    try {
+
+        const answers = Object.entries(responses).map(([questionId, answer]) => ({
+            questionId,
+            answer
+        }));
+
+        const payload = {
+            answers
+        };
+
+        const res = await axios.post(
+            `http://localhost:5000/api/forms/${id}/responses`,
+            payload
         );
+
+        alert("Response Submitted Successfully ✅");
+
+        console.log(res.data);
+
     }
 
-    const { title, description, questions } = state;
+    catch (error) {
+
+        console.log(error);
+
+        alert("Failed to Submit Response ❌");
+
+    }
+
+};
+    
 
     return (
 
@@ -21,14 +105,14 @@ function PreviewForm() {
 
             <div className="preview-header">
 
-                <h1>{title || "Untitled Form"}</h1>
+                <h1>{form.title || "Untitled Form"}</h1>
 
-                <p>{description || "No Description"}</p>
+                <p>{form.description|| "No Description"}</p>
 
             </div>
 
             {
-                questions.map((question, index) => (
+                form.questions.map((question, index) => (
 
                     <div
                         className="preview-question"
@@ -40,20 +124,34 @@ function PreviewForm() {
                         </h3>
 
                         {
-                            question.type === "short" && (
-                                <input
-                                    type="text"
-                                    placeholder="Your Answer"
-                                />
-                            )
+                            
+                            <input
+                                type="text"
+                                placeholder="Your Answer"
+                                value={responses[question._id] || ""}
+                                onChange={(e) =>
+                                    handleResponseChange(question._id, e.target.value)
+                                }
+                            />
+                            
+                            
                         }
 
                         {
-                            question.type === "para" && (
+
+                             question.type === "para" &&
+                            
+
                                 <textarea
                                     placeholder="Your Answer"
+                                    value={responses[question._id] || ""}
+                                    onChange={(e) =>
+                                        handleResponseChange(question._id, e.target.value)
+                                    }
                                 />
-                            )
+
+                            
+                           
                         }
 
                         {
@@ -64,7 +162,12 @@ function PreviewForm() {
 
                                     <input
                                         type="radio"
-                                        name={question.id}
+                                        name={question._id}
+                                        value={option}
+                                        checked={responses[question._id] === option}
+                                        onChange={(e) =>
+                                            handleResponseChange(question._id, e.target.value)
+                                        }
                                     />
 
                                     {option}
@@ -92,12 +195,22 @@ function PreviewForm() {
                         {
                             question.type === "dropdown" && (
 
-                                <select>
+                               <select
+                                    value={responses[question._id] || ""}
+                                    onChange={(e) =>
+                                        handleResponseChange(question._id, e.target.value)
+                                    }
+                                 >
+
+                                    <option value="">Select</option>
 
                                     {
                                         question.options.map((option, i) => (
 
-                                            <option key={i}>
+                                            <option
+                                                key={i}
+                                                value={option}
+                                            >
                                                 {option}
                                             </option>
 
@@ -108,11 +221,26 @@ function PreviewForm() {
 
                             )
                         }
+                        
+
 
                     </div>
 
-                ))
+                    
+                    
+
+               ))
+
+            
             }
+
+    
+                <button
+                    className="submit-btn"
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </button>
 
         </div>
 
