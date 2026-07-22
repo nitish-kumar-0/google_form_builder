@@ -1,5 +1,7 @@
 
 import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 import Navbar from "./components/Navbar";
 
@@ -35,6 +37,10 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
 
       <Route path="/edit/:id" element={<CreateForm />} />
+
+      <Route path="/register" element={<Register />} />
+
+      <Route path="/login" element={<Login />} />
 
     </Routes>
     </>

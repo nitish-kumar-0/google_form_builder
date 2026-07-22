@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/axios";
 
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -44,7 +44,7 @@ const handleSave = async () => {
 
         if (id) {
 
-            response = await axios.put(
+            response = await api.put(
                 `http://localhost:5000/api/forms/${id}`,
                 formData
             );
@@ -53,8 +53,8 @@ const handleSave = async () => {
 
         } else {
 
-            response = await axios.post(
-                "http://localhost:5000/api/forms",
+            response = await api.post(
+                "/forms",
                 formData
             );
 
@@ -86,7 +86,7 @@ const handleSave = async () => {
 
     try {
 
-        const res = await axios.get(
+        const res = await api.get(
             `http://localhost:5000/api/forms/${id}`
         );
         setFormId(form._id);

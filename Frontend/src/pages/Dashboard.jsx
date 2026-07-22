@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axios";
 
 function Dashboard() {
 
@@ -33,7 +33,7 @@ function Dashboard() {
 
         try {
 
-            const res = await axios.get("http://localhost:5000/api/forms");
+           const res = await api.get("/forms");
 
             setForms(res.data.forms);
 
@@ -51,9 +51,9 @@ function Dashboard() {
 
     try {
 
-        await axios.delete(`http://localhost:5000/api/forms/${id}`);
-
-        alert("Form Deleted Successfully ✅");
+       await api.delete(`/forms/${id}`);
+       
+        alert("Form Deleted Successfully ");
 
         fetchForms();
 

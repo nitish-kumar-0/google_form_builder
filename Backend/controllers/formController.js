@@ -3,7 +3,13 @@ const Form = require("../models/Form");
 const createForm = async (req, res) => {
 
  try{
-    const form = new Form(req.body);
+    const form = new Form({
+
+    ...req.body,
+
+    userId: req.user.id
+
+    });
 
     await form.save();
 
@@ -26,7 +32,7 @@ const createForm = async (req, res) => {
 
 const getForms = async(req,res)=>{
  try{
-   const forms = await Form.find();
+   const forms = await Form.find({ userId: req.user.id  });
    res.status(200).json({
     success: true,
     count: forms.length,
