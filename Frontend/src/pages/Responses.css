@@ -1,0 +1,31 @@
+.responses-container{
+
+    width:70%;
+    margin:40px auto;
+
+}
+
+.response-card{
+
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.1);
+
+}
+
+.answer-item{
+
+    margin-top:15px;
+    padding:10px;
+    border-bottom:1px solid #ddd;
+
+}
+
+.answer-item h4{
+
+    margin-bottom:5px;
+    color:#673ab7;
+
+}

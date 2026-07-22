@@ -7,6 +7,12 @@ function Dashboard() {
 
     const navigate = useNavigate();
 
+    const handleResponses = (id) => {
+
+     navigate(`/responses/${id}`);
+
+    };
+
     const handleEdit = (id) => {
 
         navigate(`/edit/${id}`);
@@ -105,6 +111,13 @@ function Dashboard() {
                                 onClick={() => handleEdit(form._id)}
                             >
                                 ✏ Edit
+                            </button>
+
+                            <button
+                                className="responsesBtn"
+                                onClick={() => handleResponses(form._id)}
+                            >
+                                📊 Responses
                             </button>
 
                             <button
