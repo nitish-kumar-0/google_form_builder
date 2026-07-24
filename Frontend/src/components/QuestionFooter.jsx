@@ -10,40 +10,12 @@ function QuestionFooter({
   index,
   questions,
   setQuestions,
+ 
+
 }) {
 
-  const handleDeleteQuestion = () => {
 
-    if (questions.length === 1) {
-      alert("At least one question is required.");
-      return;
-    }
 
-    const updatedQuestions = questions.filter((_, i) => i !== index);
-
-    setQuestions(updatedQuestions);
-
-  };
-
-  const handleCopyQuestion = () => {
-
-    const copiedQuestion = {
-
-        ...question,
-
-        id: Date.now(),
-
-        options: [...question.options]
-
-    };
-
-    const updatedQuestions = [...questions];
-
-    updatedQuestions.splice(index + 1, 0, copiedQuestion);
-
-    setQuestions(updatedQuestions);
-
-};
 
 const handleRequiredToggle = () => {
 
@@ -86,6 +58,42 @@ const handleMoveDown = () => {
     setQuestions(updatedQuestions);
 
 };
+
+
+  const handleDeleteQuestion = () => {
+
+    if (questions.length === 1) {
+      alert("At least one question is required.");
+      return;
+    }
+
+    const updatedQuestions = questions.filter((_, i) => i !== index);
+
+    setQuestions(updatedQuestions);
+
+  };
+
+
+  const handleCopyQuestion = () => {
+
+    const copiedQuestion = {
+
+        ...question,
+
+        id: Date.now(),
+
+        options: [...question.options]
+
+    };
+
+    const updatedQuestions = [...questions];
+
+    updatedQuestions.splice(index + 1, 0, copiedQuestion);
+
+    setQuestions(updatedQuestions);
+
+};
+
 
 
   return (

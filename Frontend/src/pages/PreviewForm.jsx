@@ -1,6 +1,8 @@
 // import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 import axios from "axios";
 import "./PreviewForm.css";
@@ -14,6 +16,8 @@ function PreviewForm() {
 
     
 const [responses, setResponses] = useState({});
+const [submitted, setSubmitted] = useState(false);
+const navigate = useNavigate();
 
 
     
@@ -64,6 +68,38 @@ const handleResponseChange = (questionId, value) => {
 
 };
     
+
+const handleCheckboxChange = (questionId, option) => {
+
+    setResponses((prev) => {
+
+        const selected = prev[questionId] || [];
+
+        if (selected.includes(option)) {
+
+            return {
+
+                ...prev,
+
+                [questionId]: selected.filter(item => item !== option)
+
+            };
+
+        }
+
+        return {
+
+            ...prev,
+
+            [questionId]: [...selected, option]
+
+        };
+
+    });
+
+};
+
+
 const handleSubmit = async () => {
 
     try {
@@ -81,10 +117,9 @@ const handleSubmit = async () => {
             `http://localhost:5000/api/forms/${id}/responses`,
             payload
         );
+        
 
-        alert("Response Submitted Successfully ✅");
-
-        console.log(res.data);
+        setSubmitted(true);
 
     }
 
@@ -92,14 +127,75 @@ const handleSubmit = async () => {
 
         console.log(error);
 
-        alert("Failed to Submit Response ❌");
+        alert("Failed to Submit Response ");
 
     }
 
 };
     
 
+ if (submitted) {
+
+                return (
+                <>
+                <div className="thankyou-page">
+
+                    <div className="thankyou-card">
+
+                        <div className="check">
+
+                            ✓
+
+                        </div>
+
+                        <h1>
+
+                            Thank You!
+
+                        </h1>
+
+                        <p>
+
+                            Your response has been recorded successfully.
+
+                        </p>
+
+                        <div className="thankyou-buttons">
+
+                            <button
+                                onClick={() => {
+
+                                    setSubmitted(false);
+
+                                    setResponses({});
+
+                                }}
+                            >
+                                Submit Another Response
+                            </button>
+
+                           <button
+                                onClick={() => navigate("/")}
+                            >
+                                Go Home
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                </>
+
+            );
+            }
+
+
     return (
+
+
+       
+
 
         <div className="preview-container">
 
@@ -116,7 +212,7 @@ const handleSubmit = async () => {
 
                     <div
                         className="preview-question"
-                        key={question.id}
+                        key={question._id}
                     >
 
                         <h3>
@@ -183,9 +279,15 @@ const handleSubmit = async () => {
 
                                 <label key={i}>
 
-                                    <input type="checkbox" />
-
-                                    {option}
+                                    <input
+                                        type="checkbox"
+                                        checked={
+                                            responses[question._id]?.includes(option) || false
+                                        }
+                                        onChange={() =>
+                                            handleCheckboxChange(question._id, option)
+                                        }
+                                    />
 
                                 </label>
 
@@ -193,28 +295,40 @@ const handleSubmit = async () => {
                         }
 
                         {
-                            question.type === "dropdown" && (
+                             question.type === "dropdown" && (
 
-                               <select
+                                <select
                                     value={responses[question._id] || ""}
                                     onChange={(e) =>
-                                        handleResponseChange(question._id, e.target.value)
+                                        handleResponseChange(
+                                            question._id,
+                                            e.target.value
+                                        )
                                     }
-                                 >
+                                >
 
-                                    <option value="">Select</option>
+                                    <option
+                                        value=""
+                                        disabled
+                                    >
+                                        Choose an option
+                                    </option>
 
                                     {
-                                        question.options.map((option, i) => (
+
+                                        question.options.map((option, index) => (
 
                                             <option
-                                                key={i}
+                                                key={index}
                                                 value={option}
                                             >
+
                                                 {option}
+
                                             </option>
 
                                         ))
+
                                     }
 
                                 </select>
@@ -243,6 +357,7 @@ const handleSubmit = async () => {
                 </button>
 
         </div>
+     
 
     );
 

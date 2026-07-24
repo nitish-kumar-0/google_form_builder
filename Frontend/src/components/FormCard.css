@@ -1,0 +1,99 @@
+.form-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.form-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.card-icon{
+
+    font-size:45px;
+
+    color:#673ab7;
+
+}
+
+.form-card h3{
+
+    margin-top:15px;
+
+    color:#222;
+
+}
+
+.form-card p{
+
+    margin-top:8px;
+
+    color:#666;
+
+    min-height:45px;
+
+}
+
+.card-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:20px;
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+.card-buttons{
+
+    display:flex;
+
+    justify-content:space-around;
+
+    margin-top:25px;
+
+}
+
+.card-buttons button{
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#ede7f6;
+
+    color:#673ab7;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:17px;
+
+}
+
+.card-buttons button:hover{
+
+    background:#673ab7;
+
+    color:white;
+
+}

@@ -147,3 +147,128 @@
     border-color:#673ab7;
 
 }
+.thankyou-page{
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#f6f8fc;
+
+}
+
+.thankyou-card{
+
+    width:500px;
+
+    background:white;
+
+    padding:50px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+
+}
+
+.check{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    background:#4caf50;
+
+    color:white;
+
+    font-size:50px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.thankyou-card h1{
+
+    margin-top:25px;
+
+    color:#333;
+
+}
+
+.thankyou-card p{
+
+    margin-top:15px;
+
+    color:#666;
+
+}
+
+.thankyou-buttons{
+
+    margin-top:35px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+}
+
+.thankyou-buttons button{
+
+    padding:12px 22px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#673ab7;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+.preview-question select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:10px;
+
+    border:1px solid #ccc;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+    outline:none;
+
+    background:white;
+
+}
+
+.preview-question select:focus{
+
+    border:2px solid #673ab7;
+
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../api/axios";
+// import "./CreateForm.css";
 
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -9,6 +10,8 @@ import FormHeader from "../components/FormHeader";
 import QuestionCard from "../components/QuestionCard";
 
 function CreateForm() {
+
+    const [activeQuestion, setActiveQuestion] = useState(null);
 
     // Form State
     const [title, setTitle] = useState("");
@@ -82,7 +85,7 @@ const handleSave = async () => {
 };
 
 
-    const fetchForm = async () => {
+const fetchForm = async () => {
 
     try {
 
@@ -119,6 +122,33 @@ useEffect(() => {
     }, [id]);
 
 
+const handleAddQuestion = (index) => {
+
+    const newQuestion = {
+
+        id: Date.now(),
+
+        questionText: "",
+
+        type: "short",
+
+        required: false,
+
+        options: ["Option 1", "Option 2"]
+
+    };
+
+    const updatedQuestions = [...questions];
+
+    updatedQuestions.splice(index + 1, 0, newQuestion);
+
+    setQuestions(updatedQuestions);
+
+};
+
+
+
+
     return (
 
         <div>
@@ -139,22 +169,30 @@ useEffect(() => {
                 setDescription={setDescription}
             />
 
-            {
-                questions.map((question, index) => (
+               
 
-                    <QuestionCard
-                        key={question.id}
-                        question={question}
-                        index={index}
-                        questions={questions}
-                        setQuestions={setQuestions}
+       
+
+        {
+            questions.map((question, index) => (
+
+              
+
+                     <QuestionCard
+                            key={question.id}
+                            question={question}
+                            index={index}
+                            questions={questions}
+                            setQuestions={setQuestions}
+                            activeQuestion={activeQuestion}
+                            setActiveQuestion={setActiveQuestion}
+                            handleAddQuestion={handleAddQuestion}
+                          
                     />
 
-                ))
-            }
-
-        </div>
-
+            ))
+        }
+ </div>
     );
 
 }

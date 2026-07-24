@@ -5,10 +5,20 @@ import ToolBox from "./ToolBox";
 import "./QuestionCard.css";
 
 function QuestionCard({
+
+
   question,
   index,
   questions,
   setQuestions,
+  activeQuestion,
+  setActiveQuestion,
+  handleAddQuestion,
+ 
+   
+
+
+
 }) {
 
   const handleQuestionChange = (e) => {
@@ -63,25 +73,37 @@ const handleDeleteOption = (optionIndex) => {
 
 };
 
-const handleAddQuestion = () => {
 
-    const newQuestion = {
+
+  const handleDeleteQuestionOnToolBox = () => {
+
+    if (questions.length === 1) {
+      alert("At least one question is required.");
+      return;
+    }
+
+    const updatedQuestions = questions.filter((_, i) => i !== index);
+
+    setQuestions(updatedQuestions);
+
+  };
+
+
+  const handleCopyQuestionOnToolBox = () => {
+
+    const copiedQuestion = {
+
+        ...question,
 
         id: Date.now(),
 
-        questionText: "",
-
-        type: "short",
-
-        required: false,
-
-        options: ["Option 1", "Option 2"]
+        options: [...question.options]
 
     };
 
     const updatedQuestions = [...questions];
 
-    updatedQuestions.splice(index + 1, 0, newQuestion);
+    updatedQuestions.splice(index + 1, 0, copiedQuestion);
 
     setQuestions(updatedQuestions);
 
@@ -89,9 +111,13 @@ const handleAddQuestion = () => {
 
 
 
+
   return (
 
-    <div className="question-card">
+   <div
+        className="question-card"
+        onClick={() => setActiveQuestion(index)}
+   >
 
       <div className="question-header">
 
@@ -229,8 +255,18 @@ const handleAddQuestion = () => {
           questions={questions}
           setQuestions={setQuestions}
       />
+            {
+                activeQuestion === index && (
+                    <ToolBox 
+                      
+                        handleAddQuestion={() => handleAddQuestion(index)}
+                        handleDeleteQuestionOnToolBox={()=>handleDeleteQuestionOnToolBox(index)}
+                        handleCopyQuestionOnToolBox={()=>{ handleCopyQuestionOnToolBox(index)}}
+                    
 
-      <ToolBox handleAddQuestion={handleAddQuestion} />
+                    />
+                )
+            }
     </div>
     
 

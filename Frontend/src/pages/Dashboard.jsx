@@ -1,59 +1,50 @@
-import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
+import FormCard from "../components/FormCard";
+import "./Dashboard.css";
+
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import api from "../api/axios";
 
+
+
 function Dashboard() {
+const navigate = useNavigate();
 
 
-    const navigate = useNavigate();
 
-    const handleResponses = (id) => {
 
-     navigate(`/responses/${id}`);
+const [forms, setForms] = useState([]);
 
-    };
-
-    const handleEdit = (id) => {
-
-        navigate(`/edit/${id}`);
-
-    };
-
-    
-
-    const [forms, setForms] = useState([]);
-
-    useEffect(() => {
-
-        fetchForms();
-
-    }, []);
-
-    const fetchForms = async () => {
-
-        try {
-
-           const res = await api.get("/forms");
-
-            setForms(res.data.forms);
-
-        }
-
-        catch (error) {
-
-            console.log(error);
-
-        }
-
-    };
-
-    const handleDelete = async (id) => {
+const fetchForms = async () => {
 
     try {
 
-       await api.delete(`/forms/${id}`);
-       
-        alert("Form Deleted Successfully ");
+        const res = await api.get("/forms");
+
+        setForms(res.data.forms);
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+    }
+
+};
+
+useEffect(() => {
+
+    fetchForms();
+
+}, []);
+
+const handleDelete = async (id) => {
+
+    try {
+
+        await api.delete(`/forms/${id}`);
 
         fetchForms();
 
@@ -63,82 +54,108 @@ function Dashboard() {
 
         console.log(error);
 
-        alert("Unable to Delete Form ❌");
-
     }
 
 };
 
+
     return (
 
-       
+        <>
 
-    <div className="dashboard">
+            <Navbar />
 
-        <h1>My Forms</h1>
+            <div className="dashboard">
 
-        <div className="forms-grid">
+                <div className="hero">
 
-            {
-                forms.map((form) => (
+                    <h1>
 
-                    <div
-                        className="form-card"
-                        key={form._id}
-                    >
+                        Welcome Back 
 
-                        <div className="card-top"></div>
+                    </h1>
 
-                        <div className="card-body">
+                    <p>
 
-                            <h3>
-                                {form.title}
-                            </h3>
+                        Create, manage and analyze all your forms in one place.
 
-                            <p>
-                                {form.description}
-                            </p>
+                    </p>
 
-                        </div>
+                </div>
 
-                        <div className="card-footer">
+                <div className="search-section">
 
-                            <button>
-                                👁 Preview
-                            </button>
+                    <input
 
-                            <button
-                                onClick={() => handleEdit(form._id)}
-                            >
-                                ✏ Edit
-                            </button>
+                        type="text"
 
-                            <button
-                                className="responsesBtn"
-                                onClick={() => handleResponses(form._id)}
-                            >
-                                📊 Responses
-                            </button>
+                        placeholder="Search Forms..."
 
-                            <button
-                                onClick={() => handleDelete(form._id)}
-                            >
-                                🗑 Delete
-                            </button>
+                    />
 
-                        </div>
+                </div>
+
+                <h2>
+
+                    Start a New Form
+
+                </h2>
+
+                <div className="create-card"   onClick={()=>navigate("/create")}>
+
+                    <div className="plus">
+
+                        +
 
                     </div>
 
-                ))
-            }
+                    <h3>
 
-        </div>
+                        Blank Form
 
-    </div>
+                    </h3>
 
-);
-    
+                </div>
+
+                <h2>
+
+                    Recent Forms
+
+                </h2>
+
+                <div className="form-grid">
+
+                    {
+
+                        forms.map((form)=>(
+
+                            <FormCard
+
+                                key={form._id}
+
+                                form={form}
+
+                                onPreview={(id)=>navigate(`/preview/${id}`)}
+
+                                onEdit={(id)=>navigate(`/edit/${id}`)}
+
+                                onResponses={(id)=>navigate(`/responses/${id}`)}
+
+                                onDelete={handleDelete}
+
+                            />
+
+                        ))
+
+                    }
+
+                </div>
+
+            </div>
+
+        </>
+
+    );
 
 }
 

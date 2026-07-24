@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import CreateForm from "./pages/CreateForm";
@@ -16,7 +16,7 @@ import Dashboard from "./pages/Dashboard";
 function App() {
   return (<>
 
-    <Navbar />
+    
     
     <Routes>
 

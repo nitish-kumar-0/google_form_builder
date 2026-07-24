@@ -96,6 +96,12 @@ const updateForm = async (req , res)=>{
                 message:"Form not found !"
             });
         }
+        if (form.userId.toString() !== req.user.id) {
+            return res.status(403).json({
+                    success: false,
+                    message: "Unauthorized"
+                });
+            }
 
         res.status(200).json({
             success:true,
@@ -121,13 +127,19 @@ const deleteForm = async (req , res) =>{
 
     try{
         const {id} = req.params;
-       const form= await Form.findByIdAndDelete(id);
+       const form= await Form.findByIdAndDelete(req.params.id);
 
         if(!form){
             return res.status(404).json({
                 success:false,
                 message:"Form not found !"
             })
+        }
+        if (form.userId.toString() !== req.user.id) {
+            return res.status(403).json({
+                success: false,
+                message: "Unauthorized"
+            });
         }
 
         res.status(200).json({
