@@ -29,3 +29,47 @@
     color:#673ab7;
 
 }
+
+.response-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.export-btn{
+
+    background:#673ab7;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.15);
+
+}
+
+.export-btn:hover{
+
+    background:#5e35b1;
+
+    transform:translateY(-2px);
+
+}

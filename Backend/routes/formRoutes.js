@@ -2,7 +2,14 @@ const auth = require("../middleware/authMiddleware");
 const express = require("express");
 const router = express.Router();
 
-const { createForm , getForms , getFormById , updateForm , deleteForm ,submitResponse  } = require("../controllers/formController");
+const { createForm ,
+        getForms , 
+        getFormById , 
+        updateForm , 
+        deleteForm ,
+        
+        } = require("../controllers/formController");
+
 
 router.post("/forms", auth, createForm);
 

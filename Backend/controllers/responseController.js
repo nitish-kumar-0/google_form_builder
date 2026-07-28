@@ -1,6 +1,7 @@
 
 const Form = require("../models/Form");
 const Response = require("../models/Response");
+const { Parser } = require("json2csv");
 
 
 const submitResponse = async (req, res) => {
@@ -102,4 +103,100 @@ catch(error){
 }
 
 
-module.exports = {submitResponse ,getResponses}
+const exportResponses = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const form = await Form.findById(id);
+
+        if (!form) {
+
+            return res.status(404).json({
+
+                success: false,
+
+                message: "Form not found"
+
+            });
+
+        }
+
+        const responses = await Response.find({
+
+            formId: id
+
+        });
+
+    const csvData = responses.map((response) => {
+
+            const row = {
+
+                submittedAt: response.createdAt
+
+                };
+
+                response.answers.forEach((ans) => {
+
+                        const question = form.questions.find(
+
+                            (q) => q._id.toString() === ans.questionId.toString()
+
+                        );
+
+                        if (question) {
+
+                            row[question.questionText] = Array.isArray(ans.answer)
+                                ? ans.answer.join(", ")
+                                : ans.answer;
+
+                        }
+
+                });
+
+        return row;
+
+    
+    });
+
+    const parser = new Parser();
+
+    const csv = parser.parse(csvData);
+
+    res.header("Content-Type", "text/csv");
+
+    res.attachment("responses.csv");
+
+    return res.send(csv);
+
+
+
+        res.json({
+
+            success: true,
+
+            totalResponses: responses.length
+
+        });
+
+    }
+
+    catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+ 
+
+
+module.exports = {submitResponse ,getResponses , exportResponses }

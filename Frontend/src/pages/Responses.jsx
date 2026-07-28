@@ -65,6 +65,27 @@ useEffect(() => {
     }
 
    return (
+<div>
+    <div className="response-header">
+
+             <h2>Responses</h2>
+
+            <button
+                className="export-btn"
+                onClick={() => {
+
+                    window.open(
+                        `http://localhost:5000/api/forms/${id}/export`
+                    );
+
+                }}
+            >
+
+            Export CSV
+
+            </button>
+    </div>
+ 
 
     <div className="responses-container">
 
@@ -130,7 +151,9 @@ useEffect(() => {
 
     </div>
 
+</div>
 );
+
 
 }
 
