@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './Login.css';
 
 function Login() {
 
@@ -37,7 +38,7 @@ function Login() {
 
         );
 
-        alert("Login Successful ✅");
+      
 
         navigate("/dashboard");
 
@@ -59,23 +60,27 @@ function Login() {
 
     return (
 
-        <div>
+        <div className="login">
 
             <h1>Login</h1>
+            
 
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
+                <input 
+                    
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
 
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+            
 
           <button onClick={handleLogin}>
 

@@ -101,21 +101,25 @@ const handleMoveDown = () => {
         <div className="question-footer">
 
         <MdContentCopy
+            title="Copy"
             className="footer-icon"
             onClick={handleCopyQuestion}
         />
 
         <MdDeleteOutline
+            title="Delete"
             className="footer-icon"
             onClick={handleDeleteQuestion}
         />
 
         <MdKeyboardArrowUp
+            title="Up"
             className="footer-icon"
             onClick={handleMoveUp}
         />
 
         <MdKeyboardArrowDown
+            title="Down"
             className="footer-icon"
             onClick={handleMoveDown}
         />

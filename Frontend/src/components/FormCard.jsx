@@ -40,7 +40,7 @@ function FormCard({
 
                 <span>
 
-                    📝 {form.questions.length} Questions
+                    &#128221; {form.questions.length} Questions
 
                 </span>
 
@@ -62,25 +62,25 @@ function FormCard({
 
             <div className="card-buttons">
 
-                <button onClick={() => onPreview(form._id)}>
+                <button title ="Preview" onClick={() => onPreview(form._id)}>
 
                     <FaEye />
 
                 </button>
 
-                <button onClick={() => onEdit(form._id)}>
+                <button title ="Edit" onClick={() => onEdit(form._id)}>
 
                     <FaEdit />
 
                 </button>
 
-                <button onClick={() => onResponses(form._id)}>
+                <button title ="Response" onClick={() => onResponses(form._id)}>
 
                     <FaChartBar />
 
                 </button>
 
-                <button onClick={() => onDelete(form._id)}>
+                <button  title = "Delete" onClick={() => onDelete(form._id)}>
 
                     <FaTrash />
 

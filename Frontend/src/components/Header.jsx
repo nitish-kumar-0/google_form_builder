@@ -54,7 +54,9 @@ function Header({
             >
                 Preview
             </button>
-            <button onClick={handleLogout}>
+            <button 
+             className="logOutBtn"
+             onClick={handleLogout}>
                 Logout
             </button>
 
